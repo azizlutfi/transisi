@@ -8,9 +8,9 @@
                 <div class="card-header">{{ __('Employee') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
+                    @if (session('success'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session('success') }}
                         </div>
                     @endif
                     <div class="d-flex justify-content-end mx-auto my-3">

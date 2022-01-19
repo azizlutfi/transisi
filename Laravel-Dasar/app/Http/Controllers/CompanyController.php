@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyValidation;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportEmployee;
 use PDF;
 use App\Employee;
 use App\Company;
@@ -63,7 +65,7 @@ class CompanyController extends Controller
             $request->logo->getClientOriginalName()
         );
 
-        return redirect('/company')->with('status', 'Data berhasil ditambahkan!');
+        return redirect('/company')->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -116,7 +118,7 @@ class CompanyController extends Controller
             );
         }
         
-        return redirect('/company')->with('status', 'Data berhasil terupdate!');
+        return redirect('/company')->with('success', 'Data berhasil terupdate!');
     }
 
     /**
@@ -130,7 +132,7 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $company->delete();
         unlink(storage_path('app/company/'.$company->logo));
-        return redirect('/company')->with('status', 'Data berhasil dihapus!');
+        return redirect('/company')->with('success', 'Data berhasil dihapus!');
     }
 
     public function exportPDF($id) {
@@ -140,5 +142,11 @@ class CompanyController extends Controller
         $pdf = PDF::loadView('company.pdf', compact('data'));
         
         return $pdf->download('employee-'.$company->name.'.pdf');
-}
+    }
+
+    public function importEmployees(Request  $request){
+        Excel::import(new ImportEmployee($request->id_company), $request->excel);
+
+        return back()->with('success', 'Data berhasil diimport!');
+    }
 }

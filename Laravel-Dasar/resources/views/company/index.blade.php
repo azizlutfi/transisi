@@ -8,9 +8,9 @@
                 <div class="card-header">{{ __('Company') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
+                    @if (session('success'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session('success') }}
                         </div>
                     @endif
                     <div class="d-flex justify-content-end mx-auto my-3">
@@ -38,7 +38,7 @@
                                 <td>{{ $c->website }}</td>
                                 <td>
                                     <a href="{{ url('/company/'.$c->id.'/PDF') }}"><button class="btn btn-outline-danger mx-2">Export PDF</button></a>
-                                    <a href="{{ url('') }}"><button class="btn btn-outline-success mx-2">Import XLS</button></a>
+                                    <button class="button-import btn btn-outline-success mx-2" data-toggle="modal" data-target="#modalImport" data-id="{{ $c->id }}" data-company="{{ $c->name}}">Import XLS</button>
                                 </td>
                                 <td class="d-flex justify-content-center">
                                     <a href="{{ url('/company/'.$c->id.'/edit') }}"><button class="btn btn-warning mx-1">Edit</button></a>
@@ -59,4 +59,42 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalImport" tabindex="-1" role="dialog" aria-labelledby="modalImport" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Import Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url('/company/importEmployees') }}" id="import-form" method="post" enctype="multipart/form-data">
+            @csrf
+            <center><h4 class="perusahaan py-3"></h4></center>
+            <div class="form-group">
+                <input type="hidden" name="id_company" id="id_company" class="id_company" name="id_company">
+                <div class="form-group">
+                    <input id="excel" type="file" class="form-control-file excel" name="excel" required>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('import-form').submit();">Import</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $('.button-import').click(function() {
+        var company = $(this).data('company');
+        var id = $(this).data('id');
+
+        $('.perusahaan').text('Import Data Pegawai '+company);
+        $('.id_company').val(id);
+    });
+</script>
 @endsection
