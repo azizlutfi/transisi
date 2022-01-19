@@ -15,7 +15,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all()->paginate(5);
+        $companies = Company::paginate(5);
     	return view('company.index', ['companies' => $companies]);
     }
 
@@ -43,7 +43,7 @@ class CompanyController extends Controller
         $company->logo = $request->logo;
         $company->website = $request->website;
         $company->save();
-        return redirect('/company')->with('success', 'Data berhasil ditambahkan!');
+        return redirect('/company')->with('status', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -85,7 +85,7 @@ class CompanyController extends Controller
         $company->logo = $request->logo;
         $company->website = $request->website;
         $company->save();
-        return redirect('/company')->with('success', 'Data berhasil terupdate!');
+        return redirect('/company')->with('status', 'Data berhasil terupdate!');
     }
 
     /**
@@ -98,6 +98,6 @@ class CompanyController extends Controller
     {
         $company = Company::find($id);
         $company->delete();
-        return redirect('/company')->with('success', 'Data berhasil dihapus!');
+        return redirect('/company')->with('status', 'Data berhasil dihapus!');
     }
 }

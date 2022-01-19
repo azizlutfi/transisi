@@ -15,7 +15,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all()->paginate(5);
+        $employees = Employee::paginate(5);
     	return view('employee.index', ['employees' => $employees]);
     }
 
@@ -42,7 +42,7 @@ class EmployeeController extends Controller
         $employee->company = $request->company;
         $employee->email = $request->email;
         $employee->save();
-        return redirect('/employee')->with('success', 'Data berhasil ditambahkan!');
+        return redirect('/employee')->with('status', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -83,7 +83,7 @@ class EmployeeController extends Controller
         $employee->company = $request->company;
         $employee->email = $request->email;
         $employee->save();
-        return redirect('/employee')->with('success', 'Data berhasil terupdate!');
+        return redirect('/employee')->with('status', 'Data berhasil terupdate!');
     }
 
     /**
@@ -96,6 +96,6 @@ class EmployeeController extends Controller
     {
         $employee = Employee::find($id);
         $employee->delete();
-        return redirect('/employee')->with('success', 'Data berhasil dihapus!');
+        return redirect('/employee')->with('status', 'Data berhasil dihapus!');
     }
 }
