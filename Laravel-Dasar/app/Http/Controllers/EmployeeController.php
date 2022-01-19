@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmployeeValidation;
 use App\Employee;
+use App\Company;
 
 class EmployeeController extends Controller
 {
@@ -26,7 +27,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employee.create');
+        $companies = Company::all();
+        return view('employee.create', ['companies' => $companies]);
     }
 
     /**
@@ -65,8 +67,9 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
+        $companies = Company::all();
         $employee = Employee::find($id);
-    	return view('employee.edit', ['employee' => $employee]);
+    	return view('employee.edit', ['employee' => $employee, 'companies' => $companies]);
     }
 
     /**
