@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CompanyValidation;
 use App\Company;
 
 class CompanyController extends Controller
@@ -14,7 +15,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::all()->paginate(5);
+    	return view('company.index', ['companies' => $companies]);
     }
 
     /**
@@ -24,7 +26,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('company.create');
     }
 
     /**
@@ -33,9 +35,15 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyValidation $request)
     {
-        //
+        $company = new Company;
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->logo = $request->logo;
+        $company->website = $request->website;
+        $company->save();
+        return redirect('/company')->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -46,7 +54,8 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = Company::find($id);
+    	return view('company.show', ['company' => $company]);
     }
 
     /**
@@ -57,7 +66,8 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+         $company = Company::find($id);
+         return view('company.edit', ['company' => $company]);
     }
 
     /**
@@ -67,9 +77,15 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CompanyValidation $request, $id)
     {
-        //
+        $company = Company::find($id);
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->logo = $request->logo;
+        $company->website = $request->website;
+        $company->save();
+        return redirect('/company')->with('success', 'Data berhasil terupdate!');
     }
 
     /**
@@ -80,6 +96,8 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $company = Company::find($id);
+        $company->delete();
+        return redirect('/company')->with('success', 'Data berhasil dihapus!');
     }
 }
