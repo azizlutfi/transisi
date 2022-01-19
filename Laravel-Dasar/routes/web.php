@@ -21,5 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/company/{id}/PDF', 'CompanyController@exportPDF');
 Route::resource('company', 'CompanyController');
 Route::resource('employee', 'EmployeeController');

@@ -13,8 +13,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="d-flex justify-content-between mx-auto my-3">
-                        <button class="btn btn-outline-success">Import XLS</button>
+                    <div class="d-flex justify-content-end mx-auto my-3">
+                        <!-- <button class="btn btn-outline-success">Import XLS</button> -->
                         <a href="{{ url('/employee/create') }}"><button class="btn btn-success">Add Employee</button></a>
                     </div>
                     @if($employees->isEmpty())

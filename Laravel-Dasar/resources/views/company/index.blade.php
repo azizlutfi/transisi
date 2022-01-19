@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Company') }}</div>
 
@@ -13,11 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="d-flex justify-content-between mx-auto my-3">
-                        <div class="col-6">
-                            <button class="btn btn-outline-danger">Export PDF</button>
-                            <button class="btn btn-outline-success">Import XLS</button>
-                        </div>
+                    <div class="d-flex justify-content-end mx-auto my-3">
                         <a href="{{ url('/company/create') }}"><button class="btn btn-success">Add Company</button></a>
                     </div>
                     @if($companies->isEmpty())
@@ -30,6 +26,7 @@
                                     <th>Email</th>
                                     <th>Logo</th>
                                     <th>Website</th>
+                                    <th>Employee</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -39,13 +36,17 @@
                                 <td>{{ $c->email }}</td>
                                 <td>{{ $c->logo }}</td>
                                 <td>{{ $c->website }}</td>
+                                <td>
+                                    <a href="{{ url('/company/'.$c->id.'/PDF') }}"><button class="btn btn-outline-danger mx-2">Export PDF</button></a>
+                                    <a href="{{ url('') }}"><button class="btn btn-outline-success mx-2">Import XLS</button></a>
+                                </td>
                                 <td class="d-flex justify-content-center">
-                                    <a href="{{ url('/company/'.$c->id.'/edit') }}"><button class="btn btn-warning mx-2">Edit</button></a>
+                                    <a href="{{ url('/company/'.$c->id.'/edit') }}"><button class="btn btn-warning mx-1">Edit</button></a>
                                     <form method="post" action="{{ url('company') }}/{{ $c->id }}"> 
                                         @csrf
                                         {{ method_field('DELETE') }}
 
-                                        <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger mx-2 delete-button">Remove</button>
+                                        <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger mx-1">Remove</button>
                                     </form>
                                 </td>
                             </tr>

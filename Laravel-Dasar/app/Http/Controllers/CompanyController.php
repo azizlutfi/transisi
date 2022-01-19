@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyValidation;
 use Illuminate\Support\Facades\Storage;
+use PDF;
+use App\Employee;
 use App\Company;
 
 class CompanyController extends Controller
@@ -130,4 +132,13 @@ class CompanyController extends Controller
         unlink(storage_path('app/company/'.$company->logo));
         return redirect('/company')->with('status', 'Data berhasil dihapus!');
     }
+
+    public function exportPDF($id) {
+        $company = Company::find($id);
+
+        $data = Employee::where('company', $id)->get();
+        $pdf = PDF::loadView('company.pdf', compact('data'));
+        
+        return $pdf->download('employee-'.$company->name.'.pdf');
+}
 }
