@@ -40,7 +40,7 @@
                                 <td>{{ $c->logo }}</td>
                                 <td>{{ $c->website }}</td>
                                 <td class="d-flex justify-content-center">
-                                    <a href="{{ url('/employee/'.$c->id.'/edit') }}"><button class="btn btn-warning mx-2">Edit</button></a>
+                                    <a href="{{ url('/company/'.$c->id.'/edit') }}"><button class="btn btn-warning mx-2">Edit</button></a>
                                     <form method="post" action="{{ url('company') }}/{{ $c->id }}"> 
                                         @csrf
                                         {{ method_field('DELETE') }}
