@@ -31,10 +31,28 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
+                        @guest
+                        
+                        @else
+                        <!-- Left Side Of Navbar -->
+                        <ul class="navbar-nav mr-auto">
+                            <li>
+                                <a href="{{ url('/home') }}" class="nav-link {{ $active === 'dashboard' ? 'active' : '' }}">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/company') }}" class="nav-link {{ $active === 'company' ? 'active' : '' }}">
+                                    Company
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/employee') }}" class="nav-link {{ $active === 'employee' ? 'active' : '' }}">
+                                    Employee
+                                </a>
+                            </li>
+                        </ul>
+                        @endguest
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -71,7 +89,6 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
