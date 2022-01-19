@@ -31,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             <label for="logo">New Logo</label>
-                            <input id="logo" type="file" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}" autocomplete="logo" autofocus>
+                            <input id="logo" type="file" class="form-control-file @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}" autocomplete="logo" autofocus>
                             @error('logo')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
