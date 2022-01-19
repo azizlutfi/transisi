@@ -12,7 +12,7 @@ class Employee extends Model
         'email',
   ];
 
-  public function company()
+  public function companies()
 {
     return $this->belongsTo('App\Company', 'company');
 }
