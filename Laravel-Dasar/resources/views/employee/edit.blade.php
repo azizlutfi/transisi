@@ -22,10 +22,8 @@
                         </div>
                         <div class="form-group">
                             <label for="company">Company</label>
-                            <select class="custom-select d-block w-100" id="company" name="company" required>
-                                @foreach($companies as $c)
-                                    <option value="{{ $c->id }}" {{ old('company', $employee->company) == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
-                                @endforeach
+                            <select class="company form-control custom-select d-block w-100" id="company" name="company" required>
+                                <option value="{{ $employee->company }}" selected>{{ $employee->companies->name }}</option>
                             </select>
                         </div>
                         <div class="form-group">

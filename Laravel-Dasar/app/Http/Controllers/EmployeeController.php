@@ -77,9 +77,8 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $companies = Company::all();
         $employee = Employee::find($id);
-    	return view('employee.edit', ['employee' => $employee, 'companies' => $companies]);
+    	return view('employee.edit', ['employee' => $employee]);
     }
 
     /**

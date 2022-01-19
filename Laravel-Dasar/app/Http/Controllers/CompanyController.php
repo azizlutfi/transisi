@@ -149,4 +149,24 @@ class CompanyController extends Controller
 
         return back()->with('success', 'Data berhasil diimport!');
     }
+
+    public function getajax(Request $request){
+        $search = $request->search;
+
+        if($search == ''){
+            $companies = Company::orderby('name','asc')->select('id','name')->limit(5)->get();
+        }else{
+            $companies = Company::orderby('name','asc')->select('id','name')->where('name', 'like', '%' .$search . '%')->limit(5)->get();
+        }
+
+        $response = array();
+        foreach($companies as $company){
+            $response[] = array(
+                "id"=>$company->id,
+                "text"=>$company->name
+            );
+        }
+
+        return response()->json($response);
+    }
 }

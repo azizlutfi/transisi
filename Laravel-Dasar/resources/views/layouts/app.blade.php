@@ -96,5 +96,33 @@
             @yield('content')
         </main>
     </div>
+    <!-- Script -->
+    <script type="text/javascript">
+
+    // CSRF Token
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $( ".company" ).select2({
+        ajax: { 
+        url: "{{route('ajaxcompany')}}",
+        type: "post",
+        dataType: 'json',
+        delay: 250,
+        data: function (params) {
+            return {
+            _token: CSRF_TOKEN,
+            search: params.term // search term
+            };
+        },
+        processResults: function (response) {
+            return {
+            results: response
+            };
+        },
+        cache: true
+        }
+
+    });
+
+    </script>
 </body>
 </html>
