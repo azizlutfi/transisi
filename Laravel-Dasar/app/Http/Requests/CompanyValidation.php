@@ -26,7 +26,7 @@ class CompanyValidation extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required',
-            'logo' => 'required|image|mimes:png|dimensions:min_width=100,min_height=100|max:2048',
+            'logo' => 'image|mimes:png|dimensions:min_width=100,min_height=100|max:2048',
             'website' => 'required'
         ];
     }
