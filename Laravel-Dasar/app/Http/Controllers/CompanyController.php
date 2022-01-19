@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyValidation;
+use Illuminate\Support\Facades\Storage;
 use App\Company;
 
 class CompanyController extends Controller
@@ -40,9 +41,16 @@ class CompanyController extends Controller
         $company = new Company;
         $company->name = $request->name;
         $company->email = $request->email;
-        $company->logo = $request->logo;
+        $company->logo = $request->logo->getClientOriginalName();
         $company->website = $request->website;
         $company->save();
+
+        Storage::putFileAs(
+            'company',
+            $request->logo, 
+            $request->logo->getClientOriginalName()
+        );
+
         return redirect('/company')->with('status', 'Data berhasil ditambahkan!');
     }
 
@@ -82,9 +90,20 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $company->name = $request->name;
         $company->email = $request->email;
-        $company->logo = $request->logo;
+        if ($request->hasFile('logo')) {
+            $company->logo = $request->logo->getClientOriginalName();
+        }
         $company->website = $request->website;
         $company->save();
+
+        if ($request->hasFile('logo')) {
+            Storage::putFileAs(
+                'company',
+                $request->logo, 
+                $request->logo->getClientOriginalName()
+            );
+        }
+        
         return redirect('/company')->with('status', 'Data berhasil terupdate!');
     }
 
@@ -98,6 +117,7 @@ class CompanyController extends Controller
     {
         $company = Company::find($id);
         $company->delete();
+        unlink(storage_path('app/company/'.$company->logo));
         return redirect('/company')->with('status', 'Data berhasil dihapus!');
     }
 }
